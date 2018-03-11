@@ -8,18 +8,31 @@
 
 <style>
     .container {
-
         margin: 0 auto;
-
         max-width: 700px;
     }
-
     #output {
-
         border: 1px solid #ddd;
-
         padding: 10px;
     }
+    .tagcolor {color: mediumblue;}
+    .tagnamecolor {color: brown;}
+    .attributecolor {color: red;}
+    .attributevaluecolor {color: mediumblue;}
+    .commentcolor {color: green;}
+    .cssselectorcolor {color: brown;}
+    .csspropertycolor {color: red;}
+    .csspropertyvaluecolor {color: mediumblue;}
+    .cssdelimitercolor {color: black;}
+    .cssimportantcolor {
+        color: red;
+        font-weight:bold;
+    }  
+    .jscolor {color: black;}
+    .jskeywordcolor {color: mediumblue;}
+    .jsstringcolor {color: brown;}
+    .jsnumbercolor {color: red;}
+    .jspropertycolor {color: black;}
 
 </style>
 
@@ -56,21 +69,7 @@ function w3CodeColor(elmnt, txt, mode) {
   var lang = (mode || "html");
   var elmntObj = (document.getElementById(elmnt) || elmnt);
   var elmntTxt = txt // elmntObj.innerHTML;
-  var tagcolor = "mediumblue";
-  var tagnamecolor = "brown";
-  var attributecolor = "red";
-  var attributevaluecolor = "mediumblue";
-  var commentcolor = "green";
-  var cssselectorcolor = "brown";
-  var csspropertycolor = "red";
-  var csspropertyvaluecolor = "mediumblue";
-  var cssdelimitercolor = "black";
-  var cssimportantcolor = "red";  
-  var jscolor = "black";
-  var jskeywordcolor = "mediumblue";
-  var jsstringcolor = "brown";
-  var jsnumbercolor = "red";
-  var jspropertycolor = "black";
+ 
   elmntObj.style.fontFamily = "Consolas,'Courier New', monospace";
   if (!lang) {lang = "html"; }
   if (lang == "html") {elmntTxt = htmlMode(elmntTxt);}
@@ -142,11 +141,11 @@ function w3CodeColor(elmnt, txt, mode) {
       rest = rest.substr(endpos);
     }
     result = done + rest;
-    result = "<span style=color:" + tagcolor + ">&lt;</span>" + result.substring(4);
+    result = "<span class='tagcolor'>&lt;</span>" + result.substring(4);
     if (result.substr(result.length - 4, 4) == "&gt;") {
-      result = result.substring(0, result.length - 4) + "<span style=color:" + tagcolor + ">&gt;</span>";
+      result = result.substring(0, result.length - 4) + "<span class='tagcolor'>&gt;</span>";
     }
-    return "<span style=color:" + tagnamecolor + ">" + result + "</span>";
+    return "<span class='tagnamecolor'>" + result + "</span>";
   }
   function attributeMode(txt) {
     var rest = txt, done = "", startpos, endpos, singlefnuttpos, doublefnuttpos, spacepos;
@@ -168,13 +167,13 @@ function w3CodeColor(elmnt, txt, mode) {
       done += attributeValueMode(rest.substring(startpos, endpos + 1));
       rest = rest.substr(endpos + 1);
     }
-    return "<span style=color:" + attributecolor + ">" + done + rest + "</span>";
+    return "<span class='attributecolor'>" + done + rest + "</span>";
   }
   function attributeValueMode(txt) {
-    return "<span style=color:" + attributevaluecolor + ">" + txt + "</span>";
+    return "<span class='attributevaluecolor'>" + txt + "</span>";
   }
   function commentMode(txt) {
-    return "<span style=color:" + commentcolor + ">" + txt + "</span>";
+    return "<span class='commentcolor'>" + txt + "</span>";
   }
   function cssMode(txt) {
     var rest = txt, done = "", s, e, comment, i, midz, c, cc;
@@ -201,12 +200,12 @@ function w3CodeColor(elmnt, txt, mode) {
       rest = rest.substr(e);
     }
     rest = done + rest;
-    rest = rest.replace(/{/g, "<span style=color:" + cssdelimitercolor + ">{</span>");
-    rest = rest.replace(/}/g, "<span style=color:" + cssdelimitercolor + ">}</span>");
+    rest = rest.replace(/{/g, "<span class='cssdelimitercolor'>{</span>");
+    rest = rest.replace(/}/g, "<span class='cssdelimitercolor'>}</span>");
     for (i = 0; i < comment.arr.length; i++) {
         rest = rest.replace("W3CSSCOMMENTPOS", comment.arr[i]);
     }
-    return "<span style=color:" + cssselectorcolor + ">" + rest + "</span>";
+    return "<span class='cssselectorcolor'>" + rest + "</span>";
   }
   function cssPropertyMode(txt) {
     var rest = txt, done = "", s, e, n, loop;
@@ -228,11 +227,11 @@ function w3CodeColor(elmnt, txt, mode) {
       done += cssPropertyValueMode(rest.substring(s, e + 1));
       rest = rest.substr(e + 1);
     }
-    return "<span style=color:" + csspropertycolor + ">" + done + rest + "</span>";
+    return "<span class='csspropertycolor'>" + done + rest + "</span>";
   }
   function cssPropertyValueMode(txt) {
     var rest = txt, done = "", s;
-    rest = "<span style=color:" + cssdelimitercolor + ">:</span>" + rest.substring(1);
+    rest = "<span class='cssdelimitercolor'>:</span>" + rest.substring(1);
     while (rest.search(/!important/i) > -1) {
       s = rest.search(/!important/i);
       done += rest.substring(0, s);
@@ -241,12 +240,12 @@ function w3CodeColor(elmnt, txt, mode) {
     }
     result = done + rest;    
     if (result.substr(result.length - 1, 1) == ";" && result.substr(result.length - 6, 6) != "&nbsp;" && result.substr(result.length - 4, 4) != "&lt;" && result.substr(result.length - 4, 4) != "&gt;" && result.substr(result.length - 5, 5) != "&amp;") {
-      result = result.substring(0, result.length - 1) + "<span style=color:" + cssdelimitercolor + ">;</span>";
+      result = result.substring(0, result.length - 1) + "<span class='cssdelimitercolor'>;</span>";
     }
-    return "<span style=color:" + csspropertyvaluecolor + ">" + result + "</span>";
+    return "<span class='csspropertyvaluecolor'>" + result + "</span>";
   }
   function cssImportantMode(txt) {
-    return "<span style=color:" + cssimportantcolor + ";font-weight:bold;>" + txt + "</span>";
+    return "<span class='cssimportantcolor'>" + txt + "</span>";
   }
   function jsMode(txt) {
     var rest = txt, done = "", esc = [], i, cc, tt = "", sfnuttpos, dfnuttpos, compos, comlinepos, keywordpos, numpos, mypos, dotpos, y;
@@ -282,19 +281,19 @@ function w3CodeColor(elmnt, txt, mode) {
     for (i = 0; i < esc.length; i++) {
       rest = rest.replace("W3JSESCAPE", esc[i]);
     }
-    return "<span style=color:" + jscolor + ">" + rest + "</span>";
+    return "<span class='jscolor'>" + rest + "</span>";
   }
   function jsStringMode(txt) {
-    return "<span style=color:" + jsstringcolor + ">" + txt + "</span>";
+    return "<span class='jsstringcolor'>" + txt + "</span>";
   }
   function jsKeywordMode(txt) {
-    return "<span style=color:" + jskeywordcolor + ">" + txt + "</span>";
+    return "<span class='jskeywordcolor'>" + txt + "</span>";
   }
   function jsNumberMode(txt) {
-    return "<span style=color:" + jsnumbercolor + ">" + txt + "</span>";
+    return "<span class='jsnumbercolor'>" + txt + "</span>";
   }
   function jsPropertyMode(txt) {
-    return "<span style=color:" + jspropertycolor + ">" + txt + "</span>";
+    return "<span class='jspropertycolor'>" + txt + "</span>";
   }
   function getDotPos(txt, func) {
     var x, i, j, s, e, arr = [".","<", " ", ";", "(", "+", ")", "[", "]", ",", "&", ":", "{", "}", "/" ,"-", "*", "|", "%"];
